@@ -62,7 +62,7 @@ docker run -d -p 8080:8080/tcp -p 8087:8087/tcp -e FTS_CONNECTION_MESSAGE="Serve
 ```
 
 ## Additional Architectures
-Currently the container is being cross compiled for `linux/amd64` and `linux/arm64`.  If additional processor architectures are needed please open an issue and request a new one.
+Currently the container is being cross compiled for `linux/amd64`,  `linux/arm64` and `linux/arm/v7`.  If additional processor architectures are needed please open an issue and request a new one.
 
 ## Docker Hub Page
 https://hub.docker.com/repository/docker/freetakteam/freetakserver
