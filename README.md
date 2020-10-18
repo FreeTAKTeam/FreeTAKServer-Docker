@@ -5,10 +5,10 @@ The official Docker image for FreeTAKServer.
 ## Usage
 
 This docker image supports a few optional configuration variables
-
+```
 FTS_CONNECTION_MESSAGE: accepts a string to send to users when they connect 
 FTS_SAVE_COT_TO_DB: accepts "True" or "False" setting to save CoTs to the DB
-
+```
 ### Docker run samples
 
 #### Quick Start
@@ -60,3 +60,9 @@ docker volume create fts_data
 
 docker run -d -p 8080:8080/tcp -p 8087:8087/tcp -e FTS_CONNECTION_MESSAGE="Server Connection Message" -e FTS_SAVE_COT_TO_DB="True" -v fts_data:/host/system/folder --name fts --restart unless-stopped freetakteam/freetakserver:1.1.2
 ```
+
+## Additional Architectures
+Currently the container is being cross compiled for `linux/amd64` and `linux/arm64`.  If additional processor architectures are needed please open an issue and request a new one.
+
+## Docker Hub Page
+https://hub.docker.com/repository/docker/freetakteam/freetakserver
