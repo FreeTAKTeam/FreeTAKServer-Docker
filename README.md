@@ -4,11 +4,19 @@ The official Docker image for FreeTAKServer.
 
 ## Usage
 
-This docker image supports a few optional configuration variables
+### Ports
+The docker image runs the ports on the same defaults as FreeTAKServer.  You can use the `-e` flag to map these ports to different ports or to run multiple FreeTAKServer's concurrently on the same host.
+
+### Environment Variabls
 ```
-FTS_CONNECTION_MESSAGE: accepts a string to send to users when they connect 
-FTS_SAVE_COT_TO_DB: accepts "True" or "False" setting to save CoTs to the DB
+FTS_CONNECTION_MESSAGE: Accepts a string to send to users when they connect.  Set to "None" to disable.
+FTS_SAVE_COT_TO_DB: Accepts "True" or "False" setting to save CoTs to the DB.
+FTS_ARGS: Arguments to pass on the command line, "-AutoStart True" is passed automatically.  
 ```
+
+### Storage
+All data in this container is stored in `/data`.  This directory will need to be stored to a volume if you wish to persist data between updates.
+
 ### Docker run samples
 
 #### Quick Start
@@ -38,7 +46,7 @@ curl https://releases.rancher.com/install-docker/19.03.sh | sh
 Or follow the docker installation guide.
 https://docs.docker.com/engine/install/debian/
 
-##### Run the container
+##### Run the Container
 ```
 docker volume create fts_data
 
@@ -55,11 +63,20 @@ sudo apt-get install curl
 curl -fsSL https://get.docker.com -o get-docker.sh
 sudo sh get-docker.sh
 ```
-##### Run the container
+##### Run the Container
 ```
 docker volume create fts_data
 
 docker run -d -p 8080:8080/tcp -p 8087:8087/tcp -e FTS_CONNECTION_MESSAGE="Server Connection Message" -e FTS_SAVE_COT_TO_DB="True" -v fts_data:/host/system/folder --name fts --restart unless-stopped freetakteam/freetakserver:1.1.2
+```
+
+## Upgrading the Container
+To upgrade the container to a new version you simply stop the container running the version you wish to upgrade from, and start a container running the version you want to upgrade to.  To have data transfered between versions you need to have used a volume during the initial set up.
+
+```bash
+docker stop fts
+docker run fts
+docker run -d -p 8080:8080/tcp -p 8087:8087/tcp -e FTS_CONNECTION_MESSAGE="Server Connection Message" -e FTS_SAVE_COT_TO_DB="True" -v fts_data:/host/system/folder --name fts --restart unless-stopped freetakteam/freetakserver:{New FTS version}
 ```
 
 ## Additional Architectures
