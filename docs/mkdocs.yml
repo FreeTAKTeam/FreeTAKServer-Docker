@@ -1,0 +1,5 @@
+site_name: FreeTAKServer Docker
+theme:
+  'material'
+plugins:
+  - search
