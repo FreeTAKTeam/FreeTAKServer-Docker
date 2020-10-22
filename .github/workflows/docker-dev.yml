@@ -1,18 +1,16 @@
-name: Build and Publish
+name: Build docker image
 
 on:
   push:
-    branches:
-      - main
-      
+    branches: main
+
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
-    - name: Checkout
-      uses: actions/checkout@v2
-    - name: install buildx
+      - name: checkout code
+        uses: actions/checkout@v2
+      - name: install buildx
         id: buildx
         uses: crazy-max/ghaction-docker-buildx@v1
         with:
@@ -20,5 +18,5 @@ jobs:
       - name: build the image
       run: |
         docker buildx build \
-          --tag freetakteam/freetakserver:devel \
+          --tag freetakteam/freetakserver:dev \
           --platform linux/amd64,linux/arm/v7,linux/arm64 .
