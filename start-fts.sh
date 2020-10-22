@@ -17,7 +17,7 @@ else
   if [ "${FTS_CONNECTION_MESSAGE}" = "None" ]; then
     sed -i "s+ConnectionMessage = .*+ConnectionMessage = None+g" /usr/local/lib/python3.7/dist-packages/FreeTAKServer/controllers/configuration/MainConfig.py
   else
-    echo "Setting Server Message ${FTS_CONNECTION_MESSAGE}"
+    echo "Setting Server Message: ${FTS_CONNECTION_MESSAGE}"
     sed -i "s+ConnectionMessage = .*+ConnectionMessage = '${FTS_CONNECTION_MESSAGE}'+g" /usr/local/lib/python3.7/dist-packages/FreeTAKServer/controllers/configuration/MainConfig.py
   fi
 fi

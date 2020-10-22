@@ -1,4 +1,4 @@
-name: Build docker image
+name: Verify Docker Image Builds
 
 on:
   push:
