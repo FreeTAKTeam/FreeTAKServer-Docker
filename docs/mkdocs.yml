@@ -1,4 +1,6 @@
 site_name: FreeTAKServer Docker
+repo_url: https://github.com/FreeTAKTeam/FreeTAKServer-Docker
+sit_author: FreeTAKTeam
 theme:
   'material'
 plugins:

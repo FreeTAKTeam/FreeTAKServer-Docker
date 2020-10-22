@@ -1,6 +1,8 @@
 # Raspberry Pi 4/Raspberry Pi 3
 It is recommended to use a Raspberry Pi 4 with 4GB or 8GB of ram.
 
+This guide assums that you have a clean install of Raspberry Pi OS or Raspbian.
+
 #### Install Docker
 ```bash
 sudo apt-get update && sudo apt-get upgrade

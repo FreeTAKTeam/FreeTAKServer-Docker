@@ -24,4 +24,4 @@ All data in this container is stored in `/data`.  This directory will need to be
 Currently the container is being cross compiled for `linux/amd64`,  `linux/arm64` and `linux/arm/v7`.  If additional processor architectures are needed please open an issue and request a new one.
 
 ## Docker Hub Page
-https://hub.docker.com/r/freetakteam/freetakserver
+[https://hub.docker.com/r/freetakteam/freetakserver](https://hub.docker.com/r/freetakteam/freetakserver)
