@@ -12,6 +12,12 @@ jobs:
     steps:
       - name: checkout code
         uses: actions/checkout@v2
+      - name: Branch name
+        id: branch_name
+        run: |
+          echo ::set-output name=SOURCE_NAME::${GITHUB_REF#refs/*/}
+          echo ::set-output name=SOURCE_BRANCH::${GITHUB_REF#refs/heads/}
+          echo ::set-output name=SOURCE_TAG::${GITHUB_REF#refs/tags/}
       - name: Login to DockerHub
         uses: docker/login-action@v1
         with:
@@ -33,6 +39,6 @@ jobs:
       - name: build the image
         run: |
           docker buildx build \
-          --tag freetakteam/freetakserver:${{ github.sha }} \
+          --tag freetakteam/freetakserver:${{ steps.branch_name.outputs.SOURCE_TAG }} \
           --platform linux/amd64,linux/arm/v7,linux/arm64 . --push
 
