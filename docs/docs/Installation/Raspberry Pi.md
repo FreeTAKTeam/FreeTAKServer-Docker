@@ -13,8 +13,10 @@ sudo sh get-docker.sh
 #### Run the Container
 ```bash
 docker volume create fts_data
+```
 
-docker run -d -p 8080:8080/tcp -p 8087:8087/tcp -e FTS_CONNECTION_MESSAGE="Server Connection Message" -e FTS_SAVE_COT_TO_DB="True" -v fts_data:/host/system/folder --name fts --restart unless-stopped freetakteam/freetakserver:1.1.2
+```bash
+docker run -d -p 8080:8080/tcp -p 8087:8087/tcp -e FTS_CONNECTION_MESSAGE="Server Connection Message" -v fts_data:/data --name fts --restart unless-stopped freetakteam/freetakserver:1.1.2
 ```
 
 # Older Pi's
