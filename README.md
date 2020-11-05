@@ -3,15 +3,13 @@
 The official Docker image for FreeTAKServer.
 
 Image Name:
-`freetakteam/freetakserver`
-
-We do not have a latest tag currently so you will need to use `freetakteam/freetakteam/freetakserver:1.1.2` please view the full documentation for installation details
+`freetakteam/freetakserver` We currently do not support the latest tag so you will need to use a specific release version.
 
 ## Usage
 When using this docker container it is suggested that you use the `--restart unless-stopped` flag as shown in the examples.  This will enure that the service automatically starts with the host and will restart if it encounters an error and crashes.  The port mappings in the examples are required to make the service accessable to hosts.  All environment variables are optional.  All data is stored in a single directory for ease of persistent data between container versions.
 
 ```bash
-sudo docker run -d -p 8080:8080/tcp -p 8087:8087/tcp -e FTS_CONNECTION_MESSAGE="Server Connection Message" -v fts_data:/data --name fts --restart unless-stopped freetakteam/freetakserver:1.1.2
+sudo docker run -d -p 8080:8080/tcp -p 8087:8087/tcp -e FTS_CONNECTION_MESSAGE="Server Connection Message" -v fts_data:/data --name fts --restart unless-stopped freetakteam/freetakserver:1.2.02
 ```
 
 ### Ports
@@ -29,4 +27,7 @@ All data in this container is stored in `/data`.  This directory will need to be
 
 # Full Documentation
 For full documetnation on how to use the container visit the docs site:
-https://freetakteam.github.io/FreeTAKServer-User-Docs/
+https://freetakteam.github.io/FreeTAKServer-User-Docs/Installation/Docker/
+
+# Dockerhub
+https://hub.docker.com/r/freetakteam/freetakserver
