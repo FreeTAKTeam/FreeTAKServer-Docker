@@ -1,11 +1,11 @@
 FROM debian:10-slim
 
-MAINTAINER LargoUsagi
+MAINTAINER FreeTAKTeam
 
-ARG FTS_VERSION=1.1.2
+ARG FTS_VERSION=1.2
 
 RUN apt-get update && \
-    apt-get install -y --no-install-recommends curl python3 python3-pip python3-dev python3-setuptools build-essential netbase libxml2-dev libxslt-dev libffi-dev python3-gevent python3-lxml && \
+    apt-get install -y --no-install-recommends curl python3 python3-pip python3-dev python3-setuptools build-essential netbase libxml2-dev libxslt-dev libffi-dev python-flask-httpauth python3-lxml && \
     pip3 install wheel && \
     pip3 install FreeTAKServer==${FTS_VERSION} && \
     pip3 check FreeTakServer && \
