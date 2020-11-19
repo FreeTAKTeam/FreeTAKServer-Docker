@@ -17,6 +17,7 @@ The docker image runs the ports on the same defaults as FreeTAKServer.  You can 
 
 ### Environment Variabls
 ```
+FTS_DATA_PACKAGE_HOST: Accepts a string to set as host for FTS datapackage. Set it to reachable IP address or domain name
 FTS_CONNECTION_MESSAGE: Accepts a string to send to users when they connect.  Set to "None" to disable.
 FTS_SAVE_COT_TO_DB: Accepts "True" or "False" setting to save CoTs to the DB.
 FTS_ARGS: Arguments to pass on the command line, "-AutoStart True" is passed automatically.  
