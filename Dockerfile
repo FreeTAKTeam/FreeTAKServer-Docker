@@ -2,7 +2,7 @@ FROM debian:10-slim
 
 MAINTAINER FreeTAKTeam
 
-ARG FTS_VERSION=1.7.5
+ARG FTS_VERSION=1.7.5.1
 
 RUN apt-get update && \
     apt-get install -y --no-install-recommends curl python3 python3-pip python3-dev python3-setuptools build-essential netbase libxml2-dev libxslt-dev libffi-dev python-flask-httpauth python3-lxml && \
