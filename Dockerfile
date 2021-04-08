@@ -35,8 +35,8 @@ RUN mkdir -p /var/log/supervisor/ && \
     chown -R fts:fts /var/log/supervisor
 COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
-COPY fatalexit /usr/local/bin/fatalexit && \
-    chmod +x /usr/local/bin/fatalexit
+COPY fatalexit /usr/local/bin/fatalexit
+RUN  chmod +x /usr/local/bin/fatalexit
 
 #Logrotation
 COPY ftsrotate /etc/logrotate.d/ftsrotate
