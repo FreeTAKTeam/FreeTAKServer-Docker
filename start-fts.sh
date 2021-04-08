@@ -1,38 +1,100 @@
-#!/bin/bash
+echo "###########################"
+echo "Preparing"
+echo "###########################"
 
-#verify if we have access to datadir
-if ! touch /data/.verify_access; then
-  log "ERROR: /data doesn't seem to be writable. Please make sure attached directory is writable by uid=$(id -u)"
-  exit 2
+#Setting variables:
+
+#DataPackageServiceDefaultIP
+if [ -z "${DataPackageServiceDefaultIP}" ]; then
+  echo "Using default DataPackageServiceDefaultIP 0.0.0.0"
+else
+   echo "Setting default user connection IP: ${DataPackageServiceDefaultIP}"
+    sed -i "s+DataPackageServiceDefaultIP = .*+DataPackageServiceDefaultIP = 'str(os.environ.get('FTS_DP_ADDRESS', '"${DataPackageServiceDefaultIP}"'))+g" /usr/local/lib/python3.8/dist-packages/FreeTAKServer/controllers/configuration/MainConfig.py
+  fi
+
+#UserConnectionIP
+if [ -z "${UserConnectionIP}" ]; then
+  echo "Using default UserConnectionIP 0.0.0.0"
+else
+   echo "Setting user connection IP: ${UserConnectionIP}"
+    sed -i "s+UserConnectionIP = .*+UserConnectionIP = 'str(os.environ.get('FTS_USER_ADDRESS', '"${UserConnectionIP}"'))+g" /usr/local/lib/python3.8/dist-packages/FreeTAKServer/controllers/configuration/MainConfig.py
+  fi
+
+#APIIP
+if [ -z "${APIIP}" ]; then
+  echo "Using default APIIP 0.0.0.0"
+else
+   echo "Setting user connection IP: ${APIIP}"
+    sed -i "s+APIIP = .*+APIIP = os.environ.get('FTS_API_ADDRESS', '"${APIIP}"')+g" /usr/local/lib/python3.8/dist-packages/FreeTAKServer/controllers/configuration/MainConfig.py
+  fi
+
+
+#AllowedCLIIPs
+if [ -z "${AllowedCLIIPs}" ]; then
+  echo "Using default AllowedCLIIPs [127.0.0.1]"
+else
+   echo "Setting AllowedCLIIPs: ${AllowedCLIIPs}"
+    sed -i "s+AllowedCLIIPs = .*+AllowedCLIIPs = ['"${AllowedCLIIPs}"']+g" /usr/local/lib/python3.8/dist-packages/FreeTAKServer/controllers/configuration/MainConfig.py
+  fi
+
+#CLIIP
+if [ -z "${CLIIP}" ]; then
+  echo "Using default CLIIP 127.0.0.1"
+else
+   echo "Setting CLIIP: ${CLIIP}"
+    sed -i "s+CLIIP = .*+CLIIP = '"${CLIIP}"'+g" /usr/local/lib/python3.8/dist-packages/FreeTAKServer/controllers/configuration/MainConfig.py
+  fi
+
+#SaveCoTToDB
+if [ -z "${SaveCoTToDB}" ]; then
+  echo "Using Default SaveCoTToDB (True)"
+else
+  echo "Setting SaveCoTToDB to ${SaveCoTToDB}"
+  sed -i "s+SaveCoTToDB = .*+SaveCoTToDB = bool(os.environ.get('FTS_API_ADDRESS', '"${SaveCoTToDB}"'))+g" /usr/local/lib/python3.8/dist-packages/FreeTAKServer/controllers/configuration/MainConfig.py
 fi
 
-#FTS doesn't pre-create logs directory
-mkdir -pv /data/logs
-
-#Set server message if passed in
-if [ -z "${FTS_CONNECTION_MESSAGE}" ]; then
+if [ -z "${MSG}" ]; then
   echo "Using Default Connection Message"
 else
-  if [ "${FTS_CONNECTION_MESSAGE}" = "None" ]; then
-    sed -i "s+ConnectionMessage = .*+ConnectionMessage = None+g" /usr/local/lib/python3.7/dist-packages/FreeTAKServer/controllers/configuration/MainConfig.py
+  if [ "${MSG}" = "None" ]; then
+    sed -i "s+ConnectionMessage = .*+ConnectionMessage = None+g" /usr/local/lib/python3.8/dist-packages/FreeTAKServer/controllers/configuration/MainConfig.py
   else
-    echo "Setting Server Message: ${FTS_CONNECTION_MESSAGE}"
-    sed -i "s+ConnectionMessage = .*+ConnectionMessage = '${FTS_CONNECTION_MESSAGE}'+g" /usr/local/lib/python3.7/dist-packages/FreeTAKServer/controllers/configuration/MainConfig.py
+    echo "Setting Server Message: ${MSG}"
+    sed -i "s+ConnectionMessage = .*+ConnectionMessage = '${MSG}'+g" /usr/local/lib/python3.8/dist-packages/FreeTAKServer/controllers/configuration/MainConfig.py
   fi
 fi
 
-#Set Save CoT to DB
-if [ -z "${FTS_SAVE_COT_TO_DB}" ]; then
-  echo "Using Default SaveCoTToDB"
+
+#UI Variables
+
+#IP
+if [ -z "${IP}" ]; then
+  echo "Using default IP 127.0.0.1"
 else
-  sed -i "s+SaveCoTToDB = bool(.*+SaveCoTToDB = bool(${FTS_SAVE_COT_TO_DB})+g" /usr/local/lib/python3.7/dist-packages/FreeTAKServer/controllers/configuration/MainConfig.py
+   echo "Setting IP: ${IP}"
+    sed -i "s+IP = .*+IP = '"${IP}"'+g" /usr/local/lib/python3.8/dist-packages/FreeTAKServer-UI/config.py
+  fi
+
+#APPIP
+if [ -z "${APPIP}" ]; then
+  echo "Using default IP 127.0.0.1"
+else
+   echo "Setting APPIP: ${APPIP}"
+    sed -i "s+APPIP = .*+APPIP = '"${APPIP}"'+g" /usr/local/lib/python3.8/dist-packages/FreeTAKServer-UI/config.py
+  fi
+
+#Asshattery
+#ASN
+if [ -z "${ASN}" ]; then
+   echo "Standard logo"
+else
+    echo "Applying ASN branding"
+    cp /asn.png /usr/local/lib/python3.8/dist-packages/FreeTAKServer-UI/app/base/static/assets/img/FreeTakServer3.png
 fi
 
-#set external IP if it's provided via ENV variables
-if [ -z "${FTS_DATA_PACKAGE_HOST}" ]; then
-  echo "Datapackage host is not set, datapackage downloading will not work"
-  python3 -m FreeTAKServer.controllers.services.FTS -DataPackageIP 0.0.0.0 ${FTS_ARGS} -AutoStart True
-else
-  echo "Datapackage host: ${FTS_DATA_PACKAGE_HOST}"
-  python3 -m FreeTAKServer.controllers.services.FTS -DataPackageIP ${FTS_DATA_PACKAGE_HOST} ${FTS_ARGS} -AutoStart True
-fi
+echo "###########################"
+echo "Preparations completed"
+echo "###########################"
+
+
+supervisord -c /etc/supervisor/conf.d/supervisord.conf
