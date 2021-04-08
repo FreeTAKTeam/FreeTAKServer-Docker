@@ -41,8 +41,6 @@ RUN  chmod +x /usr/local/bin/fatalexit
 #Logrotation
 COPY ftsrotate /etc/logrotate.d/ftsrotate
 
-#Asshattery
-COPY asn.png /asn.png
 #Hacks for making FTS/FTS UI play nice in a container
 COPY start-fts.sh /start-fts.sh
 RUN chmod +x /start-fts.sh
