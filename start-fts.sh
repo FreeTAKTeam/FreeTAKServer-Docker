@@ -83,15 +83,6 @@ else
     sed -i "s+APPIP = .*+APPIP = '"${APPIP}"'+g" /usr/local/lib/python3.8/dist-packages/FreeTAKServer-UI/config.py
   fi
 
-#Asshattery
-#ASN
-if [ -z "${ASN}" ]; then
-   echo "Standard logo"
-else
-    echo "Applying ASN branding"
-    cp /asn.png /usr/local/lib/python3.8/dist-packages/FreeTAKServer-UI/app/base/static/assets/img/FreeTakServer3.png
-fi
-
 echo "###########################"
 echo "Preparations completed"
 echo "###########################"
