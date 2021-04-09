@@ -30,8 +30,8 @@ RUN addgroup --gid 1000 fts && \
 #    chmod 775 /var/log
 
 # Container friendly supervisor
-RUN mkdir -p /var/log/supervisor/ && \
-    chown -R fts:fts /var/log/supervisor
+RUN mkdir -p /data/logs/supervisor/ && \
+    chown -R fts:fts /data/logs/supervisor
 COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
 COPY fatalexit /usr/local/bin/fatalexit
