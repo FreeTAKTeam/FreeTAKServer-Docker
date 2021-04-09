@@ -15,10 +15,9 @@ RUN apt update && \
     pip3 install requests &&\
     pip3 install flask_login &&\
     pip3 install FreeTAKServer[ui]==${FTS_VERSION} && \
-    #1.7.1 added dependencies
     pip3 install defusedxml
 
-#non root user
+# non root user
 RUN addgroup --gid 1000 fts && \
     adduser  --uid 1000 --ingroup fts --home /home/fts fts && \
     mkdir -m 775 /data && \
@@ -30,7 +29,7 @@ RUN addgroup --gid 1000 fts && \
 #    chown fts:fts /var/log && \
 #    chmod 775 /var/log
 
-#Container friendly supervisor
+# Container friendly supervisor
 RUN mkdir -p /var/log/supervisor/ && \
     chown -R fts:fts /var/log/supervisor
 COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
@@ -38,43 +37,46 @@ COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 COPY fatalexit /usr/local/bin/fatalexit
 RUN  chmod +x /usr/local/bin/fatalexit
 
-#Logrotation
+# Logrotation
 COPY ftsrotate /etc/logrotate.d/ftsrotate
 
-#Hacks for making FTS/FTS UI play nice in a container
+# Start script
+# This handles env variables and starts the service
 COPY start-fts.sh /start-fts.sh
 RUN chmod +x /start-fts.sh
 
-#FTS ports
+# FTS ports
 EXPOSE 8080
+EXPOSE 8086
 EXPOSE 8087
 EXPOSE 8089
 EXPOSE 8433
 EXPOSE 19023
-#FTS UI port
+# FTS UI port
 EXPOSE 5000
 
-# Move to volume for persistance 
-#RUN sed -i 's+DBFilePath = .*+DBFilePath = "/data/FTSDataBase.db"+g' /usr/local/lib/python3.8/dist-packages/FreeTAKServer/controllers/configuration/MainConfig.py &&\
-#    sed -i 's/root/data/' /usr/local/lib/python3.8/dist-packages/FreeTAKServer-UI/config.py && \ 
-#    sed -i s=FreeTAKServerDataPackageFolder=/data/DataPackageFolder=g /usr/local/lib/python3.8/dist-packages/FreeTAKServer/controllers/configuration/DataPackageServerConstants.py && \
-#    sed -i s='logs'='/data/logs'=g /usr/local/lib/python3.8/dist-packages/FreeTAKServer/controllers/configuration/LoggingConstants.py
-
-
+# FTS Config changes
+# The last two seds here are dirty and should be changed, this will break if main config changes!
 RUN sed -i s=FreeTAKServerDataPackageDataBase.db=/data/DataPackageDataBase.db=g /usr/local/lib/python3.8/dist-packages/FreeTAKServer/controllers/configuration/DataPackageServerConstants.py && \
     sed -i s=FreeTAKServerDataPackageFolder=/data/DataPackageFolder=g /usr/local/lib/python3.8/dist-packages/FreeTAKServer/controllers/configuration/DataPackageServerConstants.py && \
     sed -i s='logs'='/data/logs'=g /usr/local/lib/python3.8/dist-packages/FreeTAKServer/controllers/configuration/LoggingConstants.py && \
     sed -i 's+DBFilePath = .*+DBFilePath = "/data/FTSDataBase.db"+g' /usr/local/lib/python3.8/dist-packages/FreeTAKServer/controllers/configuration/MainConfig.py && \
+    sed -e '52d;53d' -i /usr/local/lib/python3.8/dist-packages/FreeTAKServer/controllers/configuration/MainConfig.py &&\
+    sed -e '52i\ \ \ \ MainPath = "/data"' -i /usr/local/lib/python3.8/dist-packages/FreeTAKServer/controllers/configuration/MainConfig.py &&\
     chmod 777 /usr/local/lib/python3.8/dist-packages/FreeTAKServer/controllers/configuration/MainConfig.py && \
     chmod 777 /usr/local/lib/python3.8/dist-packages/FreeTAKServer/controllers/configuration
     
 
+# UI Config changes
+RUN sed -i 's/root/data/g' /usr/local/lib/python3.8/dist-packages/FreeTAKServer-UI/config.py &&\
+    sed -i 's+certpath = .*+certpath = "/data/certs/"+g' /usr/local/lib/python3.8/dist-packages/FreeTAKServer-UI/config.py  &&\
+    chmod 777 /usr/local/lib/python3.8/dist-packages/FreeTAKServer-UI/config.py &&\
+    chmod 777 /usr/local/lib/python3.8/dist-packages/FreeTAKServer-UI/
+
 VOLUME ["/data"]
 
 
-#Use non root user
-#USER fts
+# Use non root user
+# USER fts
 
 ENTRYPOINT ["/bin/bash", "/start-fts.sh"]
-
-#CMD ["supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
