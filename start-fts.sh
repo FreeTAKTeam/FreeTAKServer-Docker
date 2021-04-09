@@ -9,7 +9,7 @@ if [ -z "${DataPackageServiceDefaultIP}" ]; then
   echo "Using default DataPackageServiceDefaultIP 0.0.0.0"
 else
    echo "Setting default user connection IP: ${DataPackageServiceDefaultIP}"
-    sed -i "s+DataPackageServiceDefaultIP = .*+DataPackageServiceDefaultIP = 'str(os.environ.get('FTS_DP_ADDRESS', '"${DataPackageServiceDefaultIP}"'))+g" /usr/local/lib/python3.8/dist-packages/FreeTAKServer/controllers/configuration/MainConfig.py
+    sed -i "s+DataPackageServiceDefaultIP = .*+DataPackageServiceDefaultIP = str(os.environ.get('FTS_DP_ADDRESS', \"${DataPackageServiceDefaultIP}\"))+g" /usr/local/lib/python3.8/dist-packages/FreeTAKServer/controllers/configuration/MainConfig.py
   fi
 
 #UserConnectionIP
@@ -17,7 +17,7 @@ if [ -z "${UserConnectionIP}" ]; then
   echo "Using default UserConnectionIP 0.0.0.0"
 else
    echo "Setting user connection IP: ${UserConnectionIP}"
-    sed -i "s+UserConnectionIP = .*+UserConnectionIP = 'str(os.environ.get('FTS_USER_ADDRESS', '"${UserConnectionIP}"'))+g" /usr/local/lib/python3.8/dist-packages/FreeTAKServer/controllers/configuration/MainConfig.py
+    sed -i "s+UserConnectionIP = .*+UserConnectionIP = str(os.environ.get('FTS_USER_ADDRESS', \"${UserConnectionIP}\"))+g" /usr/local/lib/python3.8/dist-packages/FreeTAKServer/controllers/configuration/MainConfig.py
   fi
 
 #APIIP
@@ -57,7 +57,7 @@ if [ -z "${MSG}" ]; then
   echo "Using Default Connection Message"
 else
   if [ "${MSG}" = "None" ]; then
-    sed -i "s+ConnectionMessage = .*+ConnectionMessage = None+g" /usr/local/lib/python3.8/dist-packages/FreeTAKServer/controllers/configuration/MainConfig.py
+    echo "Using Default Connection Message"
   else
     echo "Setting Server Message: ${MSG}"
     sed -i "s+ConnectionMessage = .*+ConnectionMessage = '${MSG}'+g" /usr/local/lib/python3.8/dist-packages/FreeTAKServer/controllers/configuration/MainConfig.py
