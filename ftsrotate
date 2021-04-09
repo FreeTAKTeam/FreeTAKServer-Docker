@@ -1,4 +1,4 @@
-/data/log/supervisor/*.log {
+/data/logs/supervisor/*.log {
   daily
   rotate 60
   copytruncate
