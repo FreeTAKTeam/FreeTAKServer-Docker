@@ -9,19 +9,45 @@ Image Name:
 When using this docker container it is suggested that you use the `--restart unless-stopped` flag as shown in the examples.  This will enure that the service automatically starts with the host and will restart if it encounters an error and crashes.  The port mappings in the examples are required to make the service accessable to hosts.  All environment variables are optional.  All data is stored in a single directory for ease of persistent data between container versions.
 
 ```bash
-sudo docker run -d -p 8080:8080/tcp -p 8087:8087/tcp -e FTS_CONNECTION_MESSAGE="Server Connection Message" -v fts_data:/data --name fts --restart unless-stopped freetakteam/freetakserver:1.2.02
+docker run -d -v fts_data:/data -p 5000:5000 -p 8080:8080 -p 8087:8087 -p 8089:8089 -p 8433:8433 -p 19023:19023 --env IP=192.168.0.123 --env MSG="This is my first FTS!" --name MyFirstTakServer freetakteam/freetakserver:1.7.5
 ```
 
 ### Ports
 The docker image runs the ports on the same defaults as FreeTAKServer.  You can use the `-e` flag to map these ports to different ports or to run multiple FreeTAKServer's concurrently on the same host.
 
+### Exposed ports 
+| Component        | Default port           |
+| ------------- |:-------------:| 
+| FTS | 8080 | 
+| FTS | 8086 | 
+| FTS | 8087 | 
+| FTS | 8089 | 
+| FTS | 8433 | 
+| FTS | 19023 | 
+| UI | 5000 | 
+
 ### Environment Variabls
-```
-FTS_DATA_PACKAGE_HOST: Accepts a string to set as host for FTS datapackage. Set it to reachable IP address or domain name
-FTS_CONNECTION_MESSAGE: Accepts a string to send to users when they connect.  Set to "None" to disable.
-FTS_SAVE_COT_TO_DB: Accepts "True" or "False" setting to save CoTs to the DB.
-FTS_ARGS: Arguments to pass on the command line, "-AutoStart True" is passed automatically.  
-```
+#### FTS
+
+
+| Variable        | Default           | Type  |
+| ------------- |:-------------:| -----:|
+| DataPackageServiceDefaultIP       | 0.0.0.0 | string |
+| UserConnectionIP      | 0.0.0.0      |   string |
+| APIIP       | 0.0.0.0      |   string |
+| AllowedCLIIPs       | 127.0.0.1      |   list |
+| CLIIP      | 127.0.0.1      |   string |
+| SaveCoTToDB      | True      |   Boolean |
+| MSG      |       |   String |
+
+#### UI
+
+| Variable        | Default           | Type  |
+| ------------- |:-------------:| -----:|
+| IP | 127.0.0.1 | string |
+| APPIP | 127.0.0.1 | string |
+
+
 
 ### Storage
 All data in this container is stored in `/data`.  This directory will need to be stored to a volume if you wish to persist data between updates.
