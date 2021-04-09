@@ -9,7 +9,7 @@ if [ -z "${DataPackageServiceDefaultIP}" ]; then
   echo "Using default DataPackageServiceDefaultIP 0.0.0.0"
 else
    echo "Setting default user connection IP: ${DataPackageServiceDefaultIP}"
-    sed -i "s+DataPackageServiceDefaultIP = .*+DataPackageServiceDefaultIP = 'str(os.environ.get('FTS_DP_ADDRESS', '"${DataPackageServiceDefaultIP}"'))+g" /usr/local/lib/python3.8/dist-packages/FreeTAKServer/controllers/configuration/MainConfig.py
+    sed -i "s+DataPackageServiceDefaultIP = .*+DataPackageServiceDefaultIP = 'str(os.environ.get('FTS_DP_ADDRESS', \"${DataPackageServiceDefaultIP}\"))+g" /usr/local/lib/python3.8/dist-packages/FreeTAKServer/controllers/configuration/MainConfig.py
   fi
 
 #UserConnectionIP
