@@ -9,7 +9,7 @@ Image Name:
 When using this docker container it is suggested that you use the `--restart unless-stopped` flag as shown in the examples.  This will enure that the service automatically starts with the host and will restart if it encounters an error and crashes.  The port mappings in the examples are required to make the service accessable to hosts.  All environment variables are optional.  All data is stored in a single directory for ease of persistent data between container versions.
 
 ```bash
-docker run -d -v fts_data:/data -p 5000:5000 -p 8080:8080 -p 8087:8087 -p 8089:8089 -p 8433:8433 -p 19023:19023 --env IP=192.168.0.123 --env MSG="This is my first FTS!" --name MyFirstTakServer freetakteam/freetakserver:1.7.5
+docker run -d -v fts_data:/data -p 5000:5000 -p 8080:8080 -p 8087:8087 -p 8089:8089 -p 8443:8443 -p 19023:19023 --env IP=192.168.0.123 --env MSG="This is my first FTS!" --name MyFirstTakServer freetakteam/freetakserver:1.7.5
 ```
 
 ### Ports
@@ -22,7 +22,7 @@ The docker image runs the ports on the same defaults as FreeTAKServer.  You can 
 | FTS | 8086 | 
 | FTS | 8087 | 
 | FTS | 8089 | 
-| FTS | 8433 | 
+| FTS | 8443 | 
 | FTS | 19023 | 
 | UI | 5000 | 
 
