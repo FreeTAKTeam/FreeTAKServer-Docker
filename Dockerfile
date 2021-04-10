@@ -23,7 +23,7 @@ RUN addgroup --gid 1000 fts && \
     adduser  --uid 1000 --ingroup fts --home /home/fts fts && \
     mkdir -m 775 /data && \
     mkdir -p /data/logs && \
-    chmod 777 /data/logs && \
+    chmod 775 /data/logs && \
     chown fts:fts -R /data /home/fts
 
 # Container friendly supervisor
