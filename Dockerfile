@@ -4,13 +4,14 @@ MAINTAINER FreeTAKTeam
 
 ARG FTS_VERSION=1.7.5
 
+ARG DEBIAN_FRONTEND=noninteractive
+ENV TZ=America/New_York
 
-RUN apt update && \
-    apt -y upgrade && \
-    apt install -y curl && \
-    apt install -y python3-pip && \
-    apt install -y python3 && \
-    python3 --version && \
+RUN apt-get update && \
+    apt-get -y upgrade && \
+    apt-get install -y curl python3 python3-pip libxml2-dev libxslt-dev python3-lxml python3-dev python3-setuptools build-essential
+
+RUN python3 --version && \
     pip3 install supervisor &&\
     pip3 install requests &&\
     pip3 install flask_login &&\
