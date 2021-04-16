@@ -63,7 +63,9 @@ RUN sed -i s=FreeTAKServerDataPackageDataBase.db=/data/DataPackageDataBase.db=g 
     sed -e '52i\ \ \ \ MainPath = "/data"' -i /usr/local/lib/python3.8/dist-packages/FreeTAKServer/controllers/configuration/MainConfig.py &&\
     chmod 777 /usr/local/lib/python3.8/dist-packages/FreeTAKServer/controllers/configuration/MainConfig.py && \
     chmod 777 /usr/local/lib/python3.8/dist-packages/FreeTAKServer/controllers/configuration
-    
+
+# Hack to not have to wait for 1.8 to get performance
+RUN sed -e '604i\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ time.sleep(0.01)' -i /usr/local/lib/python3.8/dist-packages/FreeTAKServer/controllers/services/FTS.py
 
 # UI Config changes
 RUN sed -i 's/root/data/g' /usr/local/lib/python3.8/dist-packages/FreeTAKServer-UI/config.py &&\
