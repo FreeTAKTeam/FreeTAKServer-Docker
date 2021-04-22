@@ -4,10 +4,7 @@ MAINTAINER FreeTAKTeam
 
 ARG FTS_VERSION=1.7.5
 
-ARG DEBIAN_FRONTEND=noninteractive
-ENV TZ=America/New_York
 
-VOLUME ["/data"]
 
 RUN apt-get update && \
     apt-get -y upgrade && \
@@ -75,7 +72,6 @@ RUN sed -i 's/root/data/g' /usr/local/lib/python3.8/dist-packages/FreeTAKServer-
     chmod 777 /usr/local/lib/python3.8/dist-packages/FreeTAKServer-UI/config.py &&\
     chmod 777 /usr/local/lib/python3.8/dist-packages/FreeTAKServer-UI/
 
-# Use non root user
-#USER fts
 
+VOLUME ["/data"]
 ENTRYPOINT ["/bin/bash", "/start-fts.sh"]
