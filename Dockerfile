@@ -7,6 +7,8 @@ ARG FTS_VERSION=1.7.5
 ARG DEBIAN_FRONTEND=noninteractive
 ENV TZ=America/New_York
 
+VOLUME ["/data"]
+
 RUN apt-get update && \
     apt-get -y upgrade && \
     apt-get install -y curl python3 python3-pip libxml2-dev libxslt-dev python3-lxml python3-dev python3-setuptools build-essential
@@ -72,9 +74,6 @@ RUN sed -i 's/root/data/g' /usr/local/lib/python3.8/dist-packages/FreeTAKServer-
     sed -i 's+certpath = .*+certpath = "/data/certs/"+g' /usr/local/lib/python3.8/dist-packages/FreeTAKServer-UI/config.py  &&\
     chmod 777 /usr/local/lib/python3.8/dist-packages/FreeTAKServer-UI/config.py &&\
     chmod 777 /usr/local/lib/python3.8/dist-packages/FreeTAKServer-UI/
-
-VOLUME ["/data"]
-
 
 # Use non root user
 #USER fts
