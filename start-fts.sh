@@ -3,7 +3,10 @@ echo "Preparing"
 echo "###########################"
 
 #Touch
-touch /data/logs/supervisor/
+#Create log folders
+mkdir -p -m 777 /data/
+mkdir -p -m 777 /data/logs
+mkdir -p -m 777 /data/logs/supervisor
 
 
 #Setting variables:
