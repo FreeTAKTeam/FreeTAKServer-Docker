@@ -25,8 +25,7 @@ RUN addgroup --gid 1000 fts && \
 #Create log folders
 RUN mkdir -p -m 777 /data/ && \
     mkdir -p -m 777 /data/logs && \
-    mkdir -p -m 777 /data/logs/supervisor && \
-    touch /data/logs/supervisor
+    mkdir -p -m 777 /data/logs/supervisor
 
 # Supervisord conf
 COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
