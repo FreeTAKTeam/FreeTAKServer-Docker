@@ -2,6 +2,10 @@ echo "###########################"
 echo "Preparing"
 echo "###########################"
 
+#Touch
+touch /data/logs/supervisor/
+
+
 #Setting variables:
 
 #DataPackageServiceDefaultIP
