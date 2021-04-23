@@ -4,10 +4,8 @@ echo "###########################"
 
 #Touch
 #Create log folders
-mkdir -p -m 777 /data/
-mkdir -p -m 777 /data/logs
-mkdir -p -m 777 /data/logs/supervisor
-
+mkdir -p /data/logs/supervisor
+chmod -R 777 /data
 
 #Setting variables:
 
