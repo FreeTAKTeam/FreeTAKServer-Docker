@@ -21,13 +21,9 @@ RUN python3 --version && \
 # non root user
 RUN addgroup --gid 1000 fts && \
     adduser --disabled-password --uid 1000 --ingroup fts --home /home/fts fts && \
-    mkdir -m 775 /data && \
-    mkdir -p /data/logs && \
-    chmod 775 /data/logs && \
-    chown fts:fts -R /data /home/fts
-
-# Container friendly supervisor
-RUN mkdir -p /data/logs/supervisor
+    mkdir -p -m 777 /data/ && \
+    mkdir -p -m 777 /data/logs && \
+    mkdir -p -m 777 /data/logs/supervisor    
 
 # Supervisord conf
 COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
