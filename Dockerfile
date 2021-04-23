@@ -4,8 +4,8 @@ MAINTAINER FreeTAKTeam
 
 ARG FTS_VERSION=1.7.5
 
-ARG DEBIAN_FRONTEND=noninteractive
-ENV TZ=America/New_York
+# UTC for buildtimes
+RUN ln -fs /usr/share/zoneinfo/UTC /etc/localtime
 
 RUN apt-get update && \
     apt-get -y upgrade && \
