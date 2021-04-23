@@ -27,14 +27,16 @@ RUN addgroup --gid 1000 fts && \
     chown fts:fts -R /data /home/fts
 
 # Container friendly supervisor
-RUN mkdir -p /data/logs/supervisor && \
+RUN mkdir -p /data/logs/supervisor
+
+# Supervisord conf
 COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+# Logrotation
+COPY ftsrotate /etc/logrotate.d/ftsrotate
 
 COPY fatalexit /usr/local/bin/fatalexit
 RUN  chmod +x /usr/local/bin/fatalexit
 
-# Logrotation
-COPY ftsrotate /etc/logrotate.d/ftsrotate
 
 # Start script
 # This handles env variables and starts the service
