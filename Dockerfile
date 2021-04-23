@@ -4,6 +4,7 @@ MAINTAINER FreeTAKTeam
 
 ARG FTS_VERSION=1.7.5
 
+# UTC for buildtimes
 RUN ln -fs /usr/share/zoneinfo/UTC /etc/localtime
 
 RUN apt-get update && \
@@ -22,11 +23,12 @@ RUN addgroup --gid 1000 fts && \
     adduser  --uid 1000 --ingroup fts --home /home/fts fts && \
     mkdir -m 775 /data && \
     mkdir -p /data/logs && \
-    mkdir -p /data/logs/supervisor && \
     chmod 775 /data/logs && \
     chown fts:fts -R /data /home/fts
 
-
+# Container friendly supervisor
+RUN mkdir -p /data/logs/supervisor/ && \
+    chown -R fts:fts /data/logs/supervisor
 COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
 COPY fatalexit /usr/local/bin/fatalexit
@@ -71,6 +73,10 @@ RUN sed -i 's/root/data/g' /usr/local/lib/python3.8/dist-packages/FreeTAKServer-
     chmod 777 /usr/local/lib/python3.8/dist-packages/FreeTAKServer-UI/config.py &&\
     chmod 777 /usr/local/lib/python3.8/dist-packages/FreeTAKServer-UI/
 
-
 VOLUME ["/data"]
+
+
+# Use non root user
+#USER fts
+
 ENTRYPOINT ["/bin/bash", "/start-fts.sh"]
