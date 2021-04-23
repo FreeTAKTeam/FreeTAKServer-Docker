@@ -22,11 +22,6 @@ RUN python3 --version && \
 RUN addgroup --gid 1000 fts && \
     adduser --disabled-password --uid 1000 --ingroup fts --home /home/fts fts
 
-#Create log folders
-RUN mkdir -p -m 777 /data/ && \
-    mkdir -p -m 777 /data/logs && \
-    mkdir -p -m 777 /data/logs/supervisor
-
 # Supervisord conf
 COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 # Logrotation
