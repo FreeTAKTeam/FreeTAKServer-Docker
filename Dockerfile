@@ -18,10 +18,12 @@ RUN python3 --version && \
     pip3 install FreeTAKServer[ui]==${FTS_VERSION} && \
     pip3 install defusedxml
 
-# non root user
+# Create FTS user
 RUN addgroup --gid 1000 fts && \
-    adduser --disabled-password --uid 1000 --ingroup fts --home /home/fts fts && \
-    mkdir -p -m 777 /data/ && \
+    adduser --disabled-password --uid 1000 --ingroup fts --home /home/fts fts
+
+#Create log folders
+RUN mkdir -p -m 777 /data/ && \
     mkdir -p -m 777 /data/logs && \
     mkdir -p -m 777 /data/logs/supervisor    
 
