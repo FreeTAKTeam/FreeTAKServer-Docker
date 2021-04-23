@@ -70,7 +70,7 @@ RUN sed -i 's/root/data/g' /usr/local/lib/python3.8/dist-packages/FreeTAKServer-
     chmod 777 /usr/local/lib/python3.8/dist-packages/FreeTAKServer-UI/config.py &&\
     chmod 777 /usr/local/lib/python3.8/dist-packages/FreeTAKServer-UI/
 
-VOLUME ["/data"]
+#VOLUME ["/data"]
 
 
 # Use non root user
