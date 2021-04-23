@@ -4,7 +4,9 @@ echo "###########################"
 
 #Touch
 #Create log folders
+echo "Create logs folder"
 mkdir -p /data/logs/supervisor
+echo "Set permissions on data folder"
 chmod -R 777 /data
 
 #Setting variables:
