@@ -22,12 +22,11 @@ RUN addgroup --gid 1000 fts && \
     adduser  --uid 1000 --ingroup fts --home /home/fts fts && \
     mkdir -m 775 /data && \
     mkdir -p /data/logs && \
+    mkdir -p /data/logs/supervisor && \
     chmod 775 /data/logs && \
     chown fts:fts -R /data /home/fts
 
-# Container friendly supervisor
-RUN mkdir -p /data/logs/supervisor/ && \
-    chown -R fts:fts /data/logs/supervisor
+
 COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
 COPY fatalexit /usr/local/bin/fatalexit
