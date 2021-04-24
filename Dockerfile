@@ -4,8 +4,8 @@ MAINTAINER FreeTAKTeam
 
 ARG FTS_VERSION=1.7.5
 
-ARG DEBIAN_FRONTEND=noninteractive
-ENV TZ=America/New_York
+# UTC for buildtimes
+RUN ln -fs /usr/share/zoneinfo/UTC /etc/localtime
 
 RUN apt-get update && \
     apt-get -y upgrade && \
@@ -18,24 +18,18 @@ RUN python3 --version && \
     pip3 install FreeTAKServer[ui]==${FTS_VERSION} && \
     pip3 install defusedxml
 
-# non root user
+# Create FTS user
 RUN addgroup --gid 1000 fts && \
-    adduser  --uid 1000 --ingroup fts --home /home/fts fts && \
-    mkdir -m 775 /data && \
-    mkdir -p /data/logs && \
-    chmod 775 /data/logs && \
-    chown fts:fts -R /data /home/fts
+    adduser --disabled-password --uid 1000 --ingroup fts --home /home/fts fts
 
-# Container friendly supervisor
-RUN mkdir -p /data/logs/supervisor/ && \
-    chown -R fts:fts /data/logs/supervisor
+# Supervisord conf
 COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+# Logrotation
+COPY ftsrotate /etc/logrotate.d/ftsrotate
 
 COPY fatalexit /usr/local/bin/fatalexit
 RUN  chmod +x /usr/local/bin/fatalexit
 
-# Logrotation
-COPY ftsrotate /etc/logrotate.d/ftsrotate
 
 # Start script
 # This handles env variables and starts the service
