@@ -2,6 +2,8 @@
 # FreeTAKServer-Docker
 The official Docker image for FreeTAKServer.
 
+This image is a bundled version of the FTS+UI and do not behave as a single service docker image, start with the recommended settings. Some need to be specified for the UI to work. 
+
 Image Name:
 `freetakteam/freetakserver` We currently do not support the latest tag so you will need to use a specific release version.
 
@@ -51,10 +53,6 @@ The docker image runs the ports on the same defaults as FreeTAKServer.  You can 
 
 ### Storage
 All data in this container is stored in `/data`.  This directory will need to be stored to a volume if you wish to persist data between updates.
-
-# Full Documentation
-For full documetnation on how to use the container visit the docs site:
-https://freetakteam.github.io/FreeTAKServer-User-Docs/Installation/Docker/
 
 # Dockerhub
 https://hub.docker.com/r/freetakteam/freetakserver
