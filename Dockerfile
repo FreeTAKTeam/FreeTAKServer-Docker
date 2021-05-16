@@ -72,6 +72,8 @@ RUN sed -e '604i\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ time.sleep(0.01)' -i /usr/local/
 # UI Config changes
 RUN sed -i 's/root/data/g' /usr/local/lib/python3.8/dist-packages/FreeTAKServer-UI/config.py &&\
     sed -i 's+certpath = .*+certpath = "/data/certs/"+g' /usr/local/lib/python3.8/dist-packages/FreeTAKServer-UI/config.py  &&\
+    #Adjust database path
+    sed -i 's/data\/FTSDataBase.db/data\/database\/FTSDataBase.db/g' /usr/local/lib/python3.8/dist-packages/FreeTAKServer-UI/config.py &&\
     chmod 777 /usr/local/lib/python3.8/dist-packages/FreeTAKServer-UI/config.py &&\
     chmod 777 /usr/local/lib/python3.8/dist-packages/FreeTAKServer-UI/
 
