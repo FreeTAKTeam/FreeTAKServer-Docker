@@ -51,7 +51,7 @@ EXPOSE 5000
 # FTS Config changes
 # The last two seds here are dirty and should be changed, this will break if main config changes!
 RUN sed -i s=FreeTAKServerDataPackageDataBase.db=/data/database/DataPackageDataBase.db=g /usr/local/lib/python3.8/dist-packages/FreeTAKServer/controllers/configuration/DataPackageServerConstants.py && \
-    sed -i s=FreeTAKServerDataPackageFolder=/data/DataPackageFolder=g /usr/local/lib/python3.8/dist-packages/FreeTAKServer/controllers/configuration/DataPackageServerConstants.py && \
+    sed -i s=FreeTAKServerDataPackageFolder=/data/FreeTAKServerDataPackageFolder=g /usr/local/lib/python3.8/dist-packages/FreeTAKServer/controllers/configuration/DataPackageServerConstants.py && \
     sed -i "s+self.PARENTPATH = .*+self.PARENTPATH = '\/data'+g" /usr/local/lib/python3.8/dist-packages/FreeTAKServer/controllers/configuration/LoggingConstants.py && \
     sed -i "s+self.LOGDIRECTORY = .*+self.LOGDIRECTORY = '/data/logs'+g" /usr/local/lib/python3.8/dist-packages/FreeTAKServer/controllers/configuration/LoggingConstants.py &&\
     sed -i 's+DBFilePath = .*+DBFilePath = "/data/database/FTSDataBase.db"+g' /usr/local/lib/python3.8/dist-packages/FreeTAKServer/controllers/configuration/MainConfig.py && \
