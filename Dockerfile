@@ -7,16 +7,19 @@ ARG FTS_VERSION=1.7.5
 # UTC for buildtimes
 RUN ln -fs /usr/share/zoneinfo/UTC /etc/localtime
 
+#APT
 RUN apt-get update && \
     apt-get -y upgrade && \
-    apt-get install -y curl python3 python3-pip libxml2-dev libxslt-dev python3-lxml python3-dev python3-setuptools build-essential
+    apt-get install -y libssl-dev libffi-dev curl python3 python3-pip libxml2-dev libxslt-dev python3-lxml python3-dev python3-setuptools build-essential
 
-RUN python3 --version && \
-    pip3 install supervisor &&\
+
+#PIP3
+RUN pip3 install supervisor &&\
     pip3 install requests &&\
     pip3 install flask_login &&\
     pip3 install FreeTAKServer[ui]==${FTS_VERSION} && \
-    pip3 install defusedxml
+    pip3 install defusedxml &&\
+    pip3 install pyopenssl
 
 # Create FTS user
 RUN addgroup --gid 1000 fts && \
@@ -38,7 +41,6 @@ RUN chmod +x /start-fts.sh
 
 # FTS ports
 EXPOSE 8080
-EXPOSE 8086
 EXPOSE 8087
 EXPOSE 8089
 EXPOSE 8443
@@ -54,7 +56,11 @@ RUN sed -i s=FreeTAKServerDataPackageDataBase.db=/data/DataPackageDataBase.db=g 
     sed -i "s+self.LOGDIRECTORY = .*+self.LOGDIRECTORY = '/data/logs'+g" /usr/local/lib/python3.8/dist-packages/FreeTAKServer/controllers/configuration/LoggingConstants.py &&\
     sed -i 's+DBFilePath = .*+DBFilePath = "/data/FTSDataBase.db"+g' /usr/local/lib/python3.8/dist-packages/FreeTAKServer/controllers/configuration/MainConfig.py && \
     sed -e '52d;53d' -i /usr/local/lib/python3.8/dist-packages/FreeTAKServer/controllers/configuration/MainConfig.py &&\
+    #Fix main path
     sed -e '52i\ \ \ \ MainPath = "/data"' -i /usr/local/lib/python3.8/dist-packages/FreeTAKServer/controllers/configuration/MainConfig.py &&\
+    #Fix cert generation location
+    #sed -i 's/\.\//\/data\//g' /usr/local/lib/python3.8/dist-packages/FreeTAKServer/controllers/certificate_generation.py &&\
+    #Set excessive config properties
     chmod 777 /usr/local/lib/python3.8/dist-packages/FreeTAKServer/controllers/configuration/MainConfig.py && \
     chmod 777 /usr/local/lib/python3.8/dist-packages/FreeTAKServer/controllers/configuration
 
