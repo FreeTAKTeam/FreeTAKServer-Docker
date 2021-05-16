@@ -7,6 +7,7 @@ echo "###########################"
 echo "Create logs folder"
 mkdir -p /data/logs/supervisor
 mkdir -p /data/certs/ClientPackages/
+mkdir -p /data/database/
 echo "Set permissions on data folder"
 chmod -R 777 /data
 
