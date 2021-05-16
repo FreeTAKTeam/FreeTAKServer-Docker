@@ -45,6 +45,9 @@ EXPOSE 19023
 # FTS UI port
 EXPOSE 5000
 
+#Don't ask
+alias OpenSSL="openssl"
+
 # FTS Config changes
 # The last two seds here are dirty and should be changed, this will break if main config changes!
 RUN sed -i s=FreeTAKServerDataPackageDataBase.db=/data/DataPackageDataBase.db=g /usr/local/lib/python3.8/dist-packages/FreeTAKServer/controllers/configuration/DataPackageServerConstants.py && \
