@@ -10,10 +10,8 @@ RUN ln -fs /usr/share/zoneinfo/UTC /etc/localtime
 #APT
 RUN apt-get update && \
     apt-get -y upgrade && \
-    apt-get install -y curl python3 python3-pip libxml2-dev libxslt-dev python3-lxml python3-dev python3-setuptools build-essential zlib1g-dev checkinstall
+    apt-get install -y libssl-dev libffi-dev curl python3 python3-pip libxml2-dev libxslt-dev python3-lxml python3-dev python3-setuptools build-essential
 
-#PIP
-RUN pip install pyOpenSSL
 
 #PIP3
 RUN pip3 install supervisor &&\
@@ -48,9 +46,6 @@ EXPOSE 8443
 EXPOSE 19023
 # FTS UI port
 EXPOSE 5000
-
-#Don't ask
-RUN alias OpenSSL="openssl"
 
 # FTS Config changes
 # The last two seds here are dirty and should be changed, this will break if main config changes!
