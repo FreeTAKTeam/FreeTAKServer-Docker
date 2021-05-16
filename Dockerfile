@@ -46,7 +46,7 @@ EXPOSE 19023
 EXPOSE 5000
 
 #Don't ask
-alias OpenSSL="openssl"
+RUN alias OpenSSL="openssl"
 
 # FTS Config changes
 # The last two seds here are dirty and should be changed, this will break if main config changes!
