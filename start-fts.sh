@@ -90,9 +90,6 @@ else
     sed -i "s+APPIP = .*+APPIP = '"${APPIP}"'+g" /usr/local/lib/python3.8/dist-packages/FreeTAKServer-UI/config.py
   fi
 
-#Don't ask
-alias OpenSSL="openssl"
-
 echo "###########################"
 echo "Preparations completed"
 echo "###########################"
