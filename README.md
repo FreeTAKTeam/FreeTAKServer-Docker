@@ -21,7 +21,6 @@ The docker image runs the ports on the same defaults as FreeTAKServer.  You can 
 | Component        | Default port           |
 | ------------- |:-------------:| 
 | FTS | 8080 | 
-| FTS | 8086 | 
 | FTS | 8087 | 
 | FTS | 8089 | 
 | FTS | 8443 | 
