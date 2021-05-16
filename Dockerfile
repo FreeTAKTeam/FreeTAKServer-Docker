@@ -56,7 +56,11 @@ RUN sed -i s=FreeTAKServerDataPackageDataBase.db=/data/DataPackageDataBase.db=g 
     sed -i "s+self.LOGDIRECTORY = .*+self.LOGDIRECTORY = '/data/logs'+g" /usr/local/lib/python3.8/dist-packages/FreeTAKServer/controllers/configuration/LoggingConstants.py &&\
     sed -i 's+DBFilePath = .*+DBFilePath = "/data/FTSDataBase.db"+g' /usr/local/lib/python3.8/dist-packages/FreeTAKServer/controllers/configuration/MainConfig.py && \
     sed -e '52d;53d' -i /usr/local/lib/python3.8/dist-packages/FreeTAKServer/controllers/configuration/MainConfig.py &&\
+    #Fix main path
     sed -e '52i\ \ \ \ MainPath = "/data"' -i /usr/local/lib/python3.8/dist-packages/FreeTAKServer/controllers/configuration/MainConfig.py &&\
+    #Fix cert generation location
+    sed -i 's/\.\//\/data\//g' /usr/local/lib/python3.8/dist-packages/FreeTAKServer/controllers/certificate_generation.py &&\
+    #Set excessive config properties
     chmod 777 /usr/local/lib/python3.8/dist-packages/FreeTAKServer/controllers/configuration/MainConfig.py && \
     chmod 777 /usr/local/lib/python3.8/dist-packages/FreeTAKServer/controllers/configuration
 
