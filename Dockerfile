@@ -9,7 +9,7 @@ RUN ln -fs /usr/share/zoneinfo/UTC /etc/localtime
 
 RUN apt-get update && \
     apt-get -y upgrade && \
-    apt-get install -y curl python3 python3-pip libxml2-dev libxslt-dev python3-lxml python3-dev python3-setuptools build-essential
+    apt-get install -y curl python3 python3-pip libxml2-dev libxslt-dev python3-lxml python3-dev python3-setuptools build-essential zlib1g-dev checkinstall
 
 RUN python3 --version && \
     pip3 install supervisor &&\
@@ -38,7 +38,6 @@ RUN chmod +x /start-fts.sh
 
 # FTS ports
 EXPOSE 8080
-EXPOSE 8086
 EXPOSE 8087
 EXPOSE 8089
 EXPOSE 8443
