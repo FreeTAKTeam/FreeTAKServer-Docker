@@ -7,12 +7,16 @@ ARG FTS_VERSION=1.7.5
 # UTC for buildtimes
 RUN ln -fs /usr/share/zoneinfo/UTC /etc/localtime
 
+#APT
 RUN apt-get update && \
     apt-get -y upgrade && \
     apt-get install -y curl python3 python3-pip libxml2-dev libxslt-dev python3-lxml python3-dev python3-setuptools build-essential zlib1g-dev checkinstall
 
-RUN python3 --version && \
-    pip3 install supervisor &&\
+#PIP
+RUN pip install pyOpenSSL
+
+#PIP3
+RUN pip3 install supervisor &&\
     pip3 install requests &&\
     pip3 install flask_login &&\
     pip3 install FreeTAKServer[ui]==${FTS_VERSION} && \
