@@ -50,16 +50,14 @@ EXPOSE 5000
 
 # FTS Config changes
 # The last two seds here are dirty and should be changed, this will break if main config changes!
-RUN sed -i s=FreeTAKServerDataPackageDataBase.db=/data/DataPackageDataBase.db=g /usr/local/lib/python3.8/dist-packages/FreeTAKServer/controllers/configuration/DataPackageServerConstants.py && \
-    sed -i s=FreeTAKServerDataPackageFolder=/data/DataPackageFolder=g /usr/local/lib/python3.8/dist-packages/FreeTAKServer/controllers/configuration/DataPackageServerConstants.py && \
+RUN sed -i s=FreeTAKServerDataPackageDataBase.db=/data/database/DataPackageDataBase.db=g /usr/local/lib/python3.8/dist-packages/FreeTAKServer/controllers/configuration/DataPackageServerConstants.py && \
+    sed -i s=FreeTAKServerDataPackageFolder=/data/FreeTAKServerDataPackageFolder=g /usr/local/lib/python3.8/dist-packages/FreeTAKServer/controllers/configuration/DataPackageServerConstants.py && \
     sed -i "s+self.PARENTPATH = .*+self.PARENTPATH = '\/data'+g" /usr/local/lib/python3.8/dist-packages/FreeTAKServer/controllers/configuration/LoggingConstants.py && \
     sed -i "s+self.LOGDIRECTORY = .*+self.LOGDIRECTORY = '/data/logs'+g" /usr/local/lib/python3.8/dist-packages/FreeTAKServer/controllers/configuration/LoggingConstants.py &&\
-    sed -i 's+DBFilePath = .*+DBFilePath = "/data/FTSDataBase.db"+g' /usr/local/lib/python3.8/dist-packages/FreeTAKServer/controllers/configuration/MainConfig.py && \
+    sed -i 's+DBFilePath = .*+DBFilePath = "/data/database/FTSDataBase.db"+g' /usr/local/lib/python3.8/dist-packages/FreeTAKServer/controllers/configuration/MainConfig.py && \
     sed -e '52d;53d' -i /usr/local/lib/python3.8/dist-packages/FreeTAKServer/controllers/configuration/MainConfig.py &&\
     #Fix main path
     sed -e '52i\ \ \ \ MainPath = "/data"' -i /usr/local/lib/python3.8/dist-packages/FreeTAKServer/controllers/configuration/MainConfig.py &&\
-    #Fix cert generation location
-    #sed -i 's/\.\//\/data\//g' /usr/local/lib/python3.8/dist-packages/FreeTAKServer/controllers/certificate_generation.py &&\
     #Set excessive config properties
     chmod 777 /usr/local/lib/python3.8/dist-packages/FreeTAKServer/controllers/configuration/MainConfig.py && \
     chmod 777 /usr/local/lib/python3.8/dist-packages/FreeTAKServer/controllers/configuration
@@ -70,6 +68,8 @@ RUN sed -e '604i\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ time.sleep(0.01)' -i /usr/local/
 # UI Config changes
 RUN sed -i 's/root/data/g' /usr/local/lib/python3.8/dist-packages/FreeTAKServer-UI/config.py &&\
     sed -i 's+certpath = .*+certpath = "/data/certs/"+g' /usr/local/lib/python3.8/dist-packages/FreeTAKServer-UI/config.py  &&\
+    #Adjust database path
+    sed -i 's/data\/FTSDataBase.db/data\/database\/FTSDataBase.db/g' /usr/local/lib/python3.8/dist-packages/FreeTAKServer-UI/config.py &&\
     chmod 777 /usr/local/lib/python3.8/dist-packages/FreeTAKServer-UI/config.py &&\
     chmod 777 /usr/local/lib/python3.8/dist-packages/FreeTAKServer-UI/
 
