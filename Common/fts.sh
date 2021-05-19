@@ -47,6 +47,15 @@ else
   sed -i "s+SaveCoTToDB = .*+SaveCoTToDB = bool(os.environ.get('FTS_API_ADDRESS', '"${SaveCoTToDB}"'))+g" /usr/local/lib/python3.8/dist-packages/FreeTAKServer/controllers/configuration/MainConfig.py
 fi
 
+#DataPackageServiceDefaultIP
+if [ -z "${MainLoopDelay}" ]; then
+  echo "MainLoopDelay kept at 1ms"
+else
+   echo "Setting default user connection IP: ${MainLoopDelay}"
+    sed -i "s+MainLoopDelay = .*+MainLoopDelay = '"${MainLoopDelay}"'+g" /usr/local/lib/python3.8/dist-packages/FreeTAKServer/controllers/configuration/MainConfig.py
+  fi
+
+#Connection message for users
 if [ -z "${MSG}" ]; then
   echo "Using Default Connection Message"
 else
