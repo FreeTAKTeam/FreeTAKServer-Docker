@@ -37,7 +37,7 @@ The docker image runs the ports on the same defaults as FreeTAKServer.  You can 
 
 
 | Variable        | Default           | Type  |
-| ------------- |:-------------:| -----:|
+| ------------- |:-------------:| ----- |
 | DataPackageServiceDefaultIP       | 0.0.0.0 | string |
 | UserConnectionIP      | 0.0.0.0      |   string |
 | APIIP       | 0.0.0.0      |   string |
@@ -50,7 +50,7 @@ The docker image runs the ports on the same defaults as FreeTAKServer.  You can 
 #### UI
 
 | Variable        | Default           | Type  |
-| ------------- |:-------------:| -----:|
+| ------------- |:-------------:| ----- |
 | IP | 127.0.0.1 | string |
 | APPIP | 127.0.0.1 | string |
 
