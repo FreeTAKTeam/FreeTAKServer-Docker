@@ -4,8 +4,12 @@ The official Docker image for FreeTAKServer.
 
 This image is a bundled version of the FTS+UI and do not behave as a single service docker image, start with the recommended settings. Some need to be specified for the UI to work. 
 
-Image Name:
-`freetakteam/freetakserver` We currently do not support the latest tag so you will need to use a specific release version.
+Image names:
+`freetakteam/freetakserver:Bundled-dev` - Contains a bundle of FTS+UI+Map into a single docker container for easy use for less technical people. (Map not implemented yet)
+`freetakteam/freetakserver:FTS-dev` - Only FTS
+`freetakteam/freetakserver:UI-dev` - Only UI
+`freetakteam/freetakserver:Map-dev` - Only Freetakhub map (Not currently done)
+
 
 ## Usage
 When using this docker container it is suggested that you use the `--restart unless-stopped` flag as shown in the examples.  This will enure that the service automatically starts with the host and will restart if it encounters an error and crashes.  The port mappings in the examples are required to make the service accessable to hosts.  All environment variables are optional.  All data is stored in a single directory for ease of persistent data between container versions.
