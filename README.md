@@ -4,15 +4,12 @@ The official Docker image for FreeTAKServer.
 
 This image is a bundled version of the FTS+UI and do not behave as a single service docker image, start with the recommended settings. Some need to be specified for the UI to work. 
 
-Image names:
-
-`freetakteam/freetakserver:Bundled-dev` - Contains a bundle of FTS+UI+Map into a single docker container for easy use for less technical people. (Map not implemented yet)
-
-`freetakteam/freetakserver:FTS-dev` - Only FTS
-
-`freetakteam/freetakserver:UI-dev` - Only UI
-
-`freetakteam/freetakserver:Map-dev` - Only Freetakhub map (Not currently done)
+|Image names|Description
+| ------------- |:-------------:| 
+|`freetakteam/freetakserver:Bundled-dev` |Contains a bundle of FTS+UI+Map into a single docker container for easy use for less technical people. (Map not implemented yet)|
+|`freetakteam/freetakserver:FTS-dev` |Only FTS|
+|`freetakteam/freetakserver:UI-dev` |Only UI|
+|`freetakteam/freetakserver:Map-dev` |Only Freetakhub map (Not currently done)|
 
 
 
