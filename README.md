@@ -44,6 +44,7 @@ The docker image runs the ports on the same defaults as FreeTAKServer.  You can 
 | AllowedCLIIPs       | 127.0.0.1      |   list |
 | CLIIP      | 127.0.0.1      |   string |
 | SaveCoTToDB      | True      |   Boolean |
+| MainLoopDelay|1|Delay in milliseconds|
 | MSG      |       |   String |
 
 #### UI
