@@ -1,6 +1,6 @@
 FROM ubuntu:20.04
 
-ARG FTS-VERSION=1.8.1
+ARG FTS_VERSION=1.8.1
 
 # UTC for buildtimes
 RUN ln -fs /usr/share/zoneinfo/UTC /etc/localtime
@@ -15,7 +15,7 @@ RUN apt-get update && \
 RUN pip3 install supervisor &&\
     pip3 install requests &&\
     pip3 install flask_login &&\
-    pip3 install FreeTAKServer[ui]==${FTS-VERSION} && \
+    pip3 install FreeTAKServer[ui]==${FTS_VERSION} && \
     pip3 install defusedxml &&\
     pip3 install pyopenssl
 
