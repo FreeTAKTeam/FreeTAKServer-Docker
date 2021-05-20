@@ -22,6 +22,7 @@ docker run -d -v fts_data:/data -p 5000:5000 -p 8080:8080 -p 8087:8087 -p 8089:8
 The docker image runs the ports on the same defaults as FreeTAKServer.  You can use the `-e` flag to map these ports to different ports or to run multiple FreeTAKServer's concurrently on the same host.
 
 ### Exposed ports 
+
 | Component        | Default port           |
 | ------------- |-------------| 
 | FTS | 8080 | 
@@ -35,7 +36,6 @@ The docker image runs the ports on the same defaults as FreeTAKServer.  You can 
 ### Environment Variabls
 #### FTS
 
-
 | Variable        | Default           | Type  |
 | ------------- |:-------------:| ----- |
 | DataPackageServiceDefaultIP       | 0.0.0.0 | string |
@@ -45,7 +45,7 @@ The docker image runs the ports on the same defaults as FreeTAKServer.  You can 
 | CLIIP      | 127.0.0.1      |   string |
 | SaveCoTToDB      | True      |   Boolean |
 | MainLoopDelay|1|Delay in milliseconds|
-| MSG      |       |   String |
+| MSG      | Welcome to FreeTAKServer {version}. The Parrot is not dead. It’s just resting |   String |
 
 #### UI
 
