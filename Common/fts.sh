@@ -1,18 +1,3 @@
-echo "###########################"
-echo "Preparing"
-echo "###########################"
-
-#Touch
-#Create log folders
-echo "Create logs folder"
-mkdir -p /data/logs/supervisor
-mkdir -p /data/database/
-mkdir -p /data/certs/ClientPackages/
-echo "Set permissions on data folder"
-chmod -R 777 /data
-
-#Setting variables:
-
 #DataPackageServiceDefaultIP
 if [ -z "${DataPackageServiceDefaultIP}" ]; then
   echo "Using default DataPackageServiceDefaultIP 0.0.0.0"
@@ -62,6 +47,15 @@ else
   sed -i "s+SaveCoTToDB = .*+SaveCoTToDB = bool(os.environ.get('FTS_API_ADDRESS', '"${SaveCoTToDB}"'))+g" /usr/local/lib/python3.8/dist-packages/FreeTAKServer/controllers/configuration/MainConfig.py
 fi
 
+#DataPackageServiceDefaultIP
+if [ -z "${MainLoopDelay}" ]; then
+  echo "MainLoopDelay kept at 1ms"
+else
+   echo "Setting default user connection IP: ${MainLoopDelay}"
+    sed -i "s+MainLoopDelay = .*+MainLoopDelay = '"${MainLoopDelay}"'+g" /usr/local/lib/python3.8/dist-packages/FreeTAKServer/controllers/configuration/MainConfig.py
+  fi
+
+#Connection message for users
 if [ -z "${MSG}" ]; then
   echo "Using Default Connection Message"
 else
@@ -72,29 +66,3 @@ else
     sed -i "s+ConnectionMessage = .*+ConnectionMessage = '${MSG}'+g" /usr/local/lib/python3.8/dist-packages/FreeTAKServer/controllers/configuration/MainConfig.py
   fi
 fi
-
-
-#UI Variables
-
-#IP
-if [ -z "${IP}" ]; then
-  echo "Using default IP 127.0.0.1"
-else
-   echo "Setting IP: ${IP}"
-    sed -i "s+IP = .*+IP = '"${IP}"'+g" /usr/local/lib/python3.8/dist-packages/FreeTAKServer-UI/config.py
-  fi
-
-#APPIP
-if [ -z "${APPIP}" ]; then
-  echo "Using default IP 127.0.0.1"
-else
-   echo "Setting APPIP: ${APPIP}"
-    sed -i "s+APPIP = .*+APPIP = '"${APPIP}"'+g" /usr/local/lib/python3.8/dist-packages/FreeTAKServer-UI/config.py
-  fi
-
-echo "###########################"
-echo "Preparations completed"
-echo "###########################"
-
-
-supervisord -c /etc/supervisor/conf.d/supervisord.conf

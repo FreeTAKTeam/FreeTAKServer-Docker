@@ -1,0 +1,2 @@
+# Common code to avoid duplicate code 
+Env variable handling for each component. Some env variables will be needed multiple places. Also makes the bundle manageable at the same time as the clean images.
