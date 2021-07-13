@@ -1,25 +1,28 @@
 FROM ubuntu:20.04
 
-MAINTAINER FreeTAKTeam
+LABEL maintainer=FreeTAKTeam
 
-ARG FTS_VERSION=1.7.5
+ARG FTS_VERSION=1.9
+ARG FTS_UI_VERSION=1.8.1
 
 # UTC for buildtimes
 RUN ln -fs /usr/share/zoneinfo/UTC /etc/localtime
 
 #APT
 RUN apt-get update && \
-    apt-get -y upgrade && \
-    apt-get install -y libssl-dev libffi-dev curl python3 python3-pip libxml2-dev libxslt-dev python3-lxml python3-dev python3-setuptools build-essential
+    apt-get install -y libssl-dev libffi-dev curl python3 python3-pip libxml2-dev libxslt-dev python3-lxml python3-dev python3-setuptools build-essential &&\
+    rm -rf /var/lib/apt/lists/*
 
 
 #PIP3
 RUN pip3 install supervisor &&\
     pip3 install requests &&\
     pip3 install flask_login &&\
-    pip3 install FreeTAKServer[ui]==${FTS_VERSION} && \
+    pip3 install FreeTAKServer==${FTS_VERSION} && \
+    pip3 install FreeTAKServer-UI==${FTS_UI_VERSION} && \
     pip3 install defusedxml &&\
-    pip3 install pyopenssl
+    pip3 install pyopenssl &&\
+    pip3 install pytak
 
 # Create FTS user
 RUN addgroup --gid 1000 fts && \
@@ -48,23 +51,6 @@ EXPOSE 19023
 # FTS UI port
 EXPOSE 5000
 
-# FTS Config changes
-# The last two seds here are dirty and should be changed, this will break if main config changes!
-RUN sed -i s=FreeTAKServerDataPackageDataBase.db=/data/database/DataPackageDataBase.db=g /usr/local/lib/python3.8/dist-packages/FreeTAKServer/controllers/configuration/DataPackageServerConstants.py && \
-    sed -i s=FreeTAKServerDataPackageFolder=/data/FreeTAKServerDataPackageFolder=g /usr/local/lib/python3.8/dist-packages/FreeTAKServer/controllers/configuration/DataPackageServerConstants.py && \
-    sed -i "s+self.PARENTPATH = .*+self.PARENTPATH = '\/data'+g" /usr/local/lib/python3.8/dist-packages/FreeTAKServer/controllers/configuration/LoggingConstants.py && \
-    sed -i "s+self.LOGDIRECTORY = .*+self.LOGDIRECTORY = '/data/logs'+g" /usr/local/lib/python3.8/dist-packages/FreeTAKServer/controllers/configuration/LoggingConstants.py &&\
-    sed -i 's+DBFilePath = .*+DBFilePath = "/data/database/FTSDataBase.db"+g' /usr/local/lib/python3.8/dist-packages/FreeTAKServer/controllers/configuration/MainConfig.py && \
-    sed -e '52d;53d' -i /usr/local/lib/python3.8/dist-packages/FreeTAKServer/controllers/configuration/MainConfig.py &&\
-    #Fix main path
-    sed -e '52i\ \ \ \ MainPath = "/data"' -i /usr/local/lib/python3.8/dist-packages/FreeTAKServer/controllers/configuration/MainConfig.py &&\
-    #Set excessive config properties
-    chmod 777 /usr/local/lib/python3.8/dist-packages/FreeTAKServer/controllers/configuration/MainConfig.py && \
-    chmod 777 /usr/local/lib/python3.8/dist-packages/FreeTAKServer/controllers/configuration
-
-# Hack to not have to wait for 1.8 to get performance
-RUN sed -e '604i\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ time.sleep(0.01)' -i /usr/local/lib/python3.8/dist-packages/FreeTAKServer/controllers/services/FTS.py
-
 # UI Config changes
 RUN sed -i 's/root/data/g' /usr/local/lib/python3.8/dist-packages/FreeTAKServer-UI/config.py &&\
     sed -i 's+certpath = .*+certpath = "/data/certs/"+g' /usr/local/lib/python3.8/dist-packages/FreeTAKServer-UI/config.py  &&\
@@ -73,10 +59,20 @@ RUN sed -i 's/root/data/g' /usr/local/lib/python3.8/dist-packages/FreeTAKServer-
     chmod 777 /usr/local/lib/python3.8/dist-packages/FreeTAKServer-UI/config.py &&\
     chmod 777 /usr/local/lib/python3.8/dist-packages/FreeTAKServer-UI/
 
-VOLUME ["/data"]
+# FTS MainConfig changes
+RUN sed -i 's+first_start = .*+first_start = False+g' /usr/local/lib/python3.8/dist-packages/FreeTAKServer/controllers/configuration/MainConfig.py   &&\
+    sed -i 's/\r$//' /start-fts.sh
 
+VOLUME ["/data"]
+COPY FTSConfig.yaml /opt/FTSConfig.yaml
+
+ENV IP=127.0.0.1
+ENV APPIP=0.0.0.0
 
 # Use non root user
+# TODO: Folder perms
 #USER fts
+
+
 
 ENTRYPOINT ["/bin/bash", "/start-fts.sh"]
