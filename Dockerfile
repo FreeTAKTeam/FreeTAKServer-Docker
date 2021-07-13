@@ -21,8 +21,7 @@ RUN pip3 install supervisor &&\
     pip3 install FreeTAKServer==${FTS_VERSION} && \
     pip3 install FreeTAKServer-UI==${FTS_UI_VERSION} && \
     pip3 install defusedxml &&\
-    pip3 install pyopenssl &&\
-    pip3 install pytak
+    pip3 install pyopenssl 
 
 # Create FTS user
 RUN addgroup --gid 1000 fts && \
