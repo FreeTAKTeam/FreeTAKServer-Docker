@@ -8,13 +8,7 @@ jobs:
     steps:
       - name: checkout code
         uses: actions/checkout@v2
-      - name: Login to DockerHub
-        uses: docker/login-action@v1
-        with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
-      -
-        name: Set up QEMU
+      - name: Set up QEMU
         uses: docker/setup-qemu-action@v1
         with:
           platforms: all
@@ -23,8 +17,7 @@ jobs:
         uses: docker/setup-buildx-action@v1
         with:
           version: latest
-      -
-        name: Available platforms
+      - name: Available platforms
         run: echo ${{ steps.buildx.outputs.platforms }}
       - name: build the image
         run: |
