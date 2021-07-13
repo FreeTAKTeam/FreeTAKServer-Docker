@@ -23,6 +23,7 @@ RUN pip3 install supervisor &&\
     pip3 install defusedxml &&\
     pip3 install pyopenssl 
 
+
 # Create FTS user
 RUN addgroup --gid 1000 fts && \
     adduser --disabled-password --uid 1000 --ingroup fts --home /home/fts fts
