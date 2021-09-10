@@ -1,6 +1,6 @@
 FROM ubuntu:20.04
 
-ARG FTS_VERSION=1.9.1.5
+ARG FTS_VERSION=1.8.1
 
 # UTC for buildtimes
 RUN ln -fs /usr/share/zoneinfo/UTC /etc/localtime
