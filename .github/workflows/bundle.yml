@@ -33,7 +33,7 @@ jobs:
         uses: docker/setup-buildx-action@v1
         with:
           context: .
-          dockerfile: ./FTS-Bundle/Dockerfile
+          dockerfile: ./FTS-Bundle/dockerfile
       -
         name: Available platforms
         run: echo ${{ steps.buildx.outputs.platforms }}
