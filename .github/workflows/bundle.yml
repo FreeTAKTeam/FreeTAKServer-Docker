@@ -1,4 +1,4 @@
-name: Build and Publish Release Docker Image
+name: Bundle latest
 # Controls when the workflow will run
 on:
   # Triggers the workflow on push or pull request events but only for the main branch
@@ -32,7 +32,7 @@ jobs:
         id: buildx
         uses: docker/setup-buildx-action@v1
         with:
-          working-directory: bundle
+          working-directory: FTS-Bundle
           version: latest
       -
         name: Available platforms
