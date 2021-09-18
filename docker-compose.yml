@@ -1,0 +1,32 @@
+version: "3"
+
+services:
+  takserver:
+    image: freetakteam/freetakserver:dev
+    container_name: takserver
+    environment:
+      # FTS
+      - FTS_COT_TO_DB=True
+      - FTS_CONNECTION_MESSAGE="my tak server"
+      # UI
+      - APPIP=0.0.0.0
+      - APPPORT=5000
+      - APIIP=0.0.0.0
+      - APIPORT=19023
+      - APIPROTOCOL=http
+      - WEBMAPIP=0.0.0.0
+      - WEBMAPPORT=8000
+      - WEBMAPPROTOCOL=http
+    restart: unless-stopped
+    volumes:
+      - ./data:/data
+    ports:
+      - "8080:8080"
+      - "8443:8443"
+      - "8087:8087"
+      - "8089:8089"
+    expose:
+      # API port
+      - "19023"
+      # UI port
+      - "5000"
