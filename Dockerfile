@@ -68,7 +68,6 @@ RUN sed -i 's+first_start = .*+first_start = False+g' /usr/local/lib/python3.8/d
 VOLUME ["/data"]
 COPY FTSConfig.yaml /opt/FTSConfig.yaml
 
-ENV IP=127.0.0.1
 ENV APPIP=0.0.0.0
 
 # Use non root user
