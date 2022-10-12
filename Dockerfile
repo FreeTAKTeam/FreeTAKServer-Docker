@@ -10,7 +10,9 @@ RUN ln -fs /usr/share/zoneinfo/UTC /etc/localtime
 
 #APT
 RUN apt-get update && \
-    apt-get install -y libssl-dev libffi-dev curl python3 python3-pip libxml2-dev libxslt-dev python3-lxml python3-dev python3-setuptools build-essential &&\
+    apt-get install -y libssl-dev libffi-dev curl python3 python3-pip \
+            libxml2-dev libxslt-dev python3-lxml python3-dev \
+            python3-setuptools build-essential iproute2 &&\
     rm -rf /var/lib/apt/lists/*
 
 
@@ -66,7 +68,6 @@ RUN sed -i 's+first_start = .*+first_start = False+g' /usr/local/lib/python3.8/d
 VOLUME ["/data"]
 COPY FTSConfig.yaml /opt/FTSConfig.yaml
 
-ENV IP=127.0.0.1
 ENV APPIP=0.0.0.0
 
 # Use non root user
