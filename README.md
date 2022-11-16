@@ -1,6 +1,6 @@
 
 # FreeTAKServer-Docker
-The official Docker image for FreeTAKServer.
+The former Docker image for FreeTAKServer, this repo is now archived. Please use the FTS rpository to get the current Container.
 
 This image is a bundled version of the FTS+UI and do not behave as a single service docker image, start with the recommended settings. Some need to be specified for the UI to work. 
 
